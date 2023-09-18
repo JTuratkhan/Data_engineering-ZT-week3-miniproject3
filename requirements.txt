@@ -1,0 +1,8 @@
+pylint
+pytest
+black
+matplotlib
+pandas
+polars
+ydata-profiling
+pyarrow
