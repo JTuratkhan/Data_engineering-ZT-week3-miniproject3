@@ -1,53 +1,39 @@
-import polars as pl
 import matplotlib.pyplot as plt
+from ydata_profiling import ProfileReport
+import polars as pl
 
-def calculate_summary_and_plot(data_frame, column_name):
-    """
-    Calculate summary statistics (mean, median, and standard deviation) and create a histogram
-    for a given column in a Polars DataFrame.
+house_data = "house.csv"
 
-    Args:
-        data_frame (pl.DataFrame): The Polars DataFrame containing the data.
-        column_name (str): The name of the column for which statistics should be calculated
-                           and the histogram should be created.
+def house_statistics_polars():
+    polars_house_df = pl.read_csv(house_data)
 
-    Returns:
-        dict: A dictionary containing the calculated statistics.
-    """
-    summary_stats = {}
+    #calculate average prices
+    max_ave_prices_df = polars_house_df["price"].max()
 
-    # Calculate mean
-    mean = data_frame[column_name].mean().to_pandas().iloc[0]
-    summary_stats['Mean'] = mean
+    #select rows with the highest average prices
+    polars_prices_df = polars_house_df.filter(pl.col("price")==max_ave_prices_df)
 
-    # Calculate median
-    median = data_frame[column_name].median().to_pandas().iloc[0]
-    summary_stats['Median'] = median
+    #display houses dataset statistics
+    print('Summary Statistics of the house prices:\n')
+    print(polars_house_df.describe())
 
-    # Calculate standard deviation
-    std_dev = data_frame[column_name].std().to_pandas().iloc[0]
-    summary_stats['Standard Deviation'] = std_dev
-
-    # Create a histogram
-    plt.hist(data_frame[column_name].to_pandas(), bins=20, edgecolor='k')
-    plt.xlabel(column_name)
-    plt.ylabel('Frequency')
-    plt.title(f'Histogram of {column_name}')
+    #generate plot for metro distance vs price
+    plt.scatter(polars_house_df["metro_distance"], polars_house_df["price"])
+    plt.title("metro distance vs price")
+    plt.xlabel("metro_distance")
+    plt.ylabel("Average price")
     plt.show()
 
-    return summary_stats
+    #display details abount the highest prices
+    print("\nDetails of the highest priced houses are: \n")
+    print(polars_prices_df)
 
-# Example usage:
-if __name__ == "__main__":
-    # Create a sample Polars DataFrame (replace this with your data)
-    data = {'Age': [25, 30, 35, 40, 45]}
-    df = pl.DataFrame(data)
+    #generate a .html summary report
+    polars_report_generator(polars_house_df)
+    return polars_prices_df
 
-    # Calculate summary statistics and create a histogram for the 'Age' column
-    column_name = 'Age'
-    stats = calculate_summary_and_plot(df, column_name)
+def polars_report_generator(polars_house_df):
+    profile = ProfileReport(polars_house_df.to_pandas(), title="Summary Report")
+    profile.to_file("Polars_Summary_Report.html")
 
-    # Print the calculated statistics
-    print(f"Summary Statistics for '{column_name}':")
-    for stat, value in stats.items():
-        print(f"{stat}: {value}")
+house_statistics_polars()
