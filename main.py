@@ -4,7 +4,7 @@ import polars as pl
 import pyarrow
 
 house_data = "house.csv"
-
+#hi
 def house_statistics_polars():
     polars_house_df = pl.read_csv(house_data)
 
