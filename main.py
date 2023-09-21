@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from ydata_profiling import ProfileReport
 import polars as pl
+import pyarrow
 
 house_data = "house.csv"
 
@@ -24,7 +25,7 @@ def house_statistics_polars():
     plt.ylabel("Average price")
     plt.show()
 
-    #display details abount the highest prices
+    #display details about the highest priced houses
     print("\nDetails of the highest priced houses are: \n")
     print(polars_prices_df)
 
@@ -36,4 +37,5 @@ def polars_report_generator(polars_house_df):
     profile = ProfileReport(polars_house_df.to_pandas(), title="Summary Report")
     profile.to_file("Polars_Summary_Report.html")
 
+# Call the house_statistics_polars() function to execute your analysis
 house_statistics_polars()
