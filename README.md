@@ -1,3 +1,6 @@
+[![Codespaces Prebuilds](https://github.com/JTuratkhan/ZT-DE-week3-miniproject3/actions/workflows/codespaces/create_codespaces_prebuilds/badge.svg?branch=main)](https://github.com/JTuratkhan/ZT-DE-week3-miniproject3/actions/workflows/codespaces/create_codespaces_prebuilds)
+[![Python CI](https://github.com/JTuratkhan/ZT-DE-week3-miniproject3/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/JTuratkhan/ZT-DE-week3-miniproject3/actions/workflows/main.yml)
+
 # ZT-DE-week3-miniproject3
 A repo for Polars Descriptive Statistics Script
 
