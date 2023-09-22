@@ -22,7 +22,10 @@ jobs:
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/" >> $GITHUB_ENV
-    
+
+    - name: Check test discovery
+      run: pytest --collect-only test/
+  
     - name: Run pytest
       run: pytest test/_test.py
       
