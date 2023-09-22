@@ -8,5 +8,5 @@ A repo for Polars Descriptive Statistics Script
 * Optional installation of Ipython outside of the requirements.txt
 
 # # Structure of repo
-1. Here you can find main.py which
+1. Here you can find main.py which contains functions for generation of summary statistics
 2. 
