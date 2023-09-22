@@ -23,7 +23,7 @@ jobs:
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/" >> $GITHUB_ENV
     
-    - name: Run test
+    - name: Run pytest
       run: pytest test/
       
     - name: Run main script
@@ -32,7 +32,7 @@ jobs:
     - name: List files
       run: |
         pwd
-        ls -R  
+        ls -al  
 
     - name: Archive and Upload Artifacts
       uses: actions/upload-artifact@v3
