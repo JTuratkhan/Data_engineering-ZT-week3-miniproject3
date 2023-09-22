@@ -4,10 +4,10 @@ install:
     pip install -r requirements.txt
 
 format:
-    black src/ tests/
+    black src/ test/
 
 lint:
-    flake8 src/ tests/
+    flake8 src/ test/
 
 test:
 	pytest test
