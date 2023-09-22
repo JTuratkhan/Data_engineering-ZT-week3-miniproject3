@@ -4,6 +4,9 @@ import polars as pl
 
 house_data = "house.csv"
 
+def __init__():
+    pass
+
 def house_statistics_polars():
     polars_house_df = pl.read_csv(house_data)
 
@@ -36,4 +39,3 @@ def polars_report_generator(polars_house_df):
     profile = ProfileReport(polars_house_df.to_pandas(), title="Summary Report")
     profile.to_file("Polars_Summary_Report.html")
 
-house_statistics_polars()
