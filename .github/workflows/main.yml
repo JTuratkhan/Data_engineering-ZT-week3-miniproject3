@@ -27,7 +27,7 @@ jobs:
       run: pytest test/
       
     - name: Run main script
-      run: python src/main.py
+      run: python main.py
 
     - name: List files
       run: |
