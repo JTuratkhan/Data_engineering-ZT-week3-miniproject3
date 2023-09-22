@@ -1,10 +1,13 @@
-.PHONY: install test report
+.PHONY: install format lint test
 
 install:
-	pip install -r requirements.txt
+    pip install -r requirements.txt
+
+format:
+    black src/ tests/
+
+lint:
+    flake8 src/ tests/
 
 test:
-	pytest test/
-
-report:
-	python src/main.py
+	pytest test
