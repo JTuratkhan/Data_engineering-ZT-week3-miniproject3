@@ -24,7 +24,7 @@ jobs:
       run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/" >> $GITHUB_ENV
     
     - name: Run pytest
-      run: pytest test/
+      run: pytest test/_test.py
       
     - name: Run main script
       run: python main.py
