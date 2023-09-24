@@ -2,7 +2,7 @@ import os
 import polars as pl
 from main import house_statistics_polars, polars_report_generator  # Assuming your main script is named 'main.py'
 
-def mock_data():
+def mock_data(_):
     # Create a small dataset for testing
     data = {
         "metro_distance": [5, 10, 15, 20],
