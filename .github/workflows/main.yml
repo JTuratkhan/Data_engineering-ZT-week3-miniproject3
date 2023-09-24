@@ -20,6 +20,9 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: lint
+      run: make lint
+
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/" >> $GITHUB_ENV
   
@@ -28,25 +31,10 @@ jobs:
       
     - name: Run main script
       run: python main.py
-
-    - name: List files
-      run: |
-        pwd
-        ls -al  
-
-    - name: Archive and Upload Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ml_pipeline-artifacts
-        path: ${{ github.workspace }}/results
-
-    - name: Save to repository
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN2 }}
-      run: |
-        echo GH_TOKEN: "${GH_TOKEN2}"
-        git config --global user.name 'github-actions'
-        git config --local user.email "action@github.com"
-        git add .
-        git commit -m "Add results"
-        git push
+      
+    - name: format
+      run: make format
+    
+    - name: deploy
+      run: make deploy
+  
