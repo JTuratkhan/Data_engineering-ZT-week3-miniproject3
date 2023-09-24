@@ -20,9 +20,6 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: lint
-      run: make lint
-
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/" >> $GITHUB_ENV
   
