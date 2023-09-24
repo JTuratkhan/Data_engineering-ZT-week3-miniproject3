@@ -1,5 +1,6 @@
 import pytest
 import os
+import polars as pl
 from main import house_statistics_polars, polars_report_generator
 
 # Test if highest average priced houses are correctly identified
