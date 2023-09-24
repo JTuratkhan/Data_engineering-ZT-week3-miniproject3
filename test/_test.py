@@ -1,41 +1,34 @@
-import matplotlib.pyplot as plt
-from ydata_profiling import ProfileReport
+import os
 import polars as pl
+from main import house_statistics_polars, polars_report_generator  # Assuming your main script is named 'main.py'
 
-house_data = "house.csv"
+def mock_data():
+    # Create a small dataset for testing
+    data = {
+        "metro_distance": [5, 10, 15, 20],
+        "price": [100, 150, 200, 250]
+    }
+    return pl.DataFrame(data)
 
-def __init__():
-    pass
+def test_house_statistics_polars():
+    # Mocking data reading with a smaller dataset
+    pl.read_csv = mock_data
 
-def house_statistics_polars():
-    polars_house_df = pl.read_csv(house_data)
+    # Call the function
+    high_priced_df = house_statistics_polars()
+    
+    # Check if the function returns the expected highest priced house
+    assert high_priced_df.shape[0] == 1
+    assert high_priced_df["price"].to_list()[0] == 250
 
-    # Calculate average prices
-    max_ave_prices_df = polars_house_df.select(pl.max("price")).to_pandas()["max"]
+def test_polars_report_generator():
+    # Mocking data reading with a smaller dataset
+    pl.read_csv = mock_data
 
-    # Select rows with the highest average prices
-    polars_prices_df = polars_house_df.filter(pl.col("price") == max_ave_prices_df)
-
-    # Display houses dataset statistics
-    print('Summary Statistics of the house prices:\n')
-    print(polars_house_df.describe())
-
-    # Generate plot for metro distance vs price
-    plt.scatter(polars_house_df["metro_distance"].to_pandas(), polars_house_df["price"].to_pandas())
-    plt.title("Metro Distance vs Price")
-    plt.xlabel("Metro Distance")
-    plt.ylabel("Average Price")
-    plt.show()
-
-    # Display details about the highest priced houses
-    print("\nDetails of the highest priced houses are: \n")
-    print(polars_prices_df)
-
-    # Generate a .html summary report
-    polars_report_generator(polars_house_df)
-    return polars_prices_df
-
-def polars_report_generator(polars_house_df):
-    profile = ProfileReport(polars_house_df.to_pandas(), title="Summary Report")
-    profile.to_file("Polars_Summary_Report.html")
-
+    # Create a report
+    df = mock_data()
+    polars_report_generator(df)
+    
+    # Check if the report file is created
+    assert os.path.exists("Polars_Summary_Report.html")
+    
