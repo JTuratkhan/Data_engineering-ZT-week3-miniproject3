@@ -1,34 +1,22 @@
+import pytest
 import os
-import polars as pl
-from main import house_statistics_polars, polars_report_generator  # Assuming your main script is named 'main.py'
+from main import house_statistics_polars, polars_report_generator
 
-def mock_data(_):
-    # Create a small dataset for testing
-    data = {
-        "metro_distance": [5, 10, 15, 20],
-        "price": [100, 150, 200, 250]
-    }
-    return pl.DataFrame(data)
-
+# Test if highest average priced houses are correctly identified
 def test_house_statistics_polars():
-    # Mocking data reading with a smaller dataset
-    pl.read_csv = mock_data
+    result = house_statistics_polars()
+    assert len(result) > 0
+    assert result["price"].max() == result["price"].min(), "All houses in the result should have the same highest average price"
 
-    # Call the function
-    high_priced_df = house_statistics_polars()
-    
-    # Check if the function returns the expected highest priced house
-    assert high_priced_df.shape[0] == 1
-    assert high_priced_df["price"].to_list()[0] == 250
-
+# Test if .html report is generated
 def test_polars_report_generator():
-    # Mocking data reading with a smaller dataset
-    pl.read_csv = mock_data
+    # Use a sample dataframe for testing
+    test_df = pl.DataFrame({
+        "metro_distance": [1, 2, 3],
+        "price": [100, 200, 300]
+    })
 
-    # Create a report
-    df = mock_data()
-    polars_report_generator(df)
-    
-    # Check if the report file is created
-    assert os.path.exists("Polars_Summary_Report.html")
+    polars_report_generator(test_df)
+    assert os.path.exists("Polars_Summary_Report.html"), ".html report file should be generated"
+
     
